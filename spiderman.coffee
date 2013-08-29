@@ -51,7 +51,7 @@ CastTesk = (task)->
       task.error = 'Unable to access page'
     else
       pageGrab.injectJs 'jquery.1.10.2.min.js'
-      pageGrab.injectJs "grabscripts/#{task.site}_#{task.commandType}.js"
+      pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}.js"
       gbdate = pageGrab.evaluate ->
         return spGrab()
       pageGrab.close()
