@@ -7,17 +7,18 @@ window.spGrab = function() {
     var ThumbDowns, ThumbUps, atcul, item, thumb, _this;
 
     _this = $(this);
-    atcul = _this.children('.bar').children('ul');
+    atcul = '.bar'.children('ul');
     item = {};
+    item.sourceLink = "http://www.qiushibaike.com" + _this.children('.detail>a').attr('href');
     item.providerId = _this.attr('id').match(/\d+/g)[0];
     ThumbUps = parseInt($('li', atcul).first().text());
     ThumbDowns = parseInt($('li', atcul).eq(1).text());
     item.grade = ThumbUps - ThumbDowns;
     thumb = $.trim(_this.children('.thumb').html());
     if (thumb) {
-      item.Content = $.trim(_this.children('.content').html() + "<br />" + thumb);
+      item.content = $.trim(_this.children('.content').html() + "<br />" + thumb);
     } else {
-      item.Content = $.trim(_this.children('.content').html());
+      item.content = $.trim(_this.children('.content').html());
     }
     return data.push(item);
   });

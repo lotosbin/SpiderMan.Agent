@@ -1,10 +1,16 @@
 window.spGrab = ->
-	_this = $('div.col1:first>.block')
-	atcul = _this.children('.bar').children('ul')
-	item =
-		#title: $.trim _this.children('.detail').text()
-		content: $.trim _this.children('.content').html()
-		#creatDate: new Date _this.children('.content').attr('title') #now faild, wait phantomjs2.0 fix it
-		thumbUps: $.trim $('li', atcul).first().text()
-		thumbDowns: $.trim $('li', atcul).eq(1).text()
-	return item
+    item = {}
+    item.providerId = window.location.pathname
+    item.sourceLink = window.location.href
+    #item.BrithDate = new Date $.trim $('.web_time>span', this).text() #now faild, wait phantomjs2.0 fix it
+
+    item.title = $('h1>a').text()
+    item.grade = parseInt $("span.comment-big>a").text()
+
+    item.content = ""
+    contentTags = $('.time_s').nextUntil('.break')
+    $('img[src^="http://tankr.net/"]', contentTags).remove()
+    contentTags.each ->
+        item.content += $(this).clone().wrap('<div />').parent().html()
+
+    return item

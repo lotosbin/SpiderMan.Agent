@@ -63,6 +63,9 @@ CastTesk = function(task) {
   pageGrab = webpage.create();
   pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36';
   pageGrab.settings.loadImages = false;
+  pageGrab.onConsoleMessage = function(msg) {
+    return console.log('~Evaluate: ' + msg);
+  };
   pageGrab.onError = function(msg, trace) {
     var msgStack;
 
@@ -88,7 +91,7 @@ CastTesk = function(task) {
       task.error = 'Unable to access page';
     } else {
       pageGrab.injectJs('jquery.1.10.2.min.js');
-      pageGrab.injectJs("grabscripts/" + task.site + "_" + task.commandType + ".js");
+      pageGrab.injectJs("grabscripts/" + task.source + "_" + task.commandType + ".js");
       gbdate = pageGrab.evaluate(function() {
         return spGrab();
       });
