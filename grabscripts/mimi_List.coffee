@@ -4,7 +4,7 @@ window.spGrab = ->
 		item = {}
 		atag = $('li.con_comments', this).children('a')
 		item.providerId = atag.attr('href').match(/\d+/g)[0]
-		item.sourceLink = "http://www.mimi.com" + atag.attr('href')
+		item.sourceLink = "http://www.mimi.me" + atag.attr('href')
 		#item.BrithDate = new Date $(this).attr('title') #now faild, wait phantomjs2.0 fix it
 
 		ThumbUps = parseInt $("li.con_like", this).text()

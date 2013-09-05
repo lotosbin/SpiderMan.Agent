@@ -7,10 +7,10 @@ window.spGrab = function() {
     var ThumbDowns, ThumbUps, atcul, item, thumb, _this;
 
     _this = $(this);
-    atcul = '.bar'.children('ul');
     item = {};
     item.sourceLink = "http://www.qiushibaike.com" + _this.children('.detail>a').attr('href');
     item.providerId = _this.attr('id').match(/\d+/g)[0];
+    atcul = $('.bar', this).children('ul');
     ThumbUps = parseInt($('li', atcul).first().text());
     ThumbDowns = parseInt($('li', atcul).eq(1).text());
     item.grade = ThumbUps - ThumbDowns;
