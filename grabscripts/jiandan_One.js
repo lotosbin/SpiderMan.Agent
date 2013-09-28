@@ -4,11 +4,15 @@ window.spGrab = function() {
   item = {};
   item.providerId = window.location.pathname;
   item.sourceLink = window.location.href;
-  item.title = $('h1>a').text();
+  item.title = $('h1:eq(1)>a').text();
   item.grade = parseInt($("span.comment-big>a").text());
-  item.content = "";
   contentTags = $('.time_s').nextUntil('.break');
-  $('img[src^="http://tankr.net/"]', contentTags).remove();
+  item.localImages = [];
+  $('img[src^="http://tankr.net/"]', contentTags).each(function() {
+    item.localImages.push($(this).attr('src'));
+    return $(this).attr("src", "http://gptstatic.com/jiandan/" + $(this).attr('src').replace('http://tankr.net/', ''));
+  });
+  item.content = "";
   contentTags.each(function() {
     return item.content += $(this).clone().wrap('<div />').parent().html();
   });
