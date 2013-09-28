@@ -10,7 +10,7 @@ window.spGrab = function() {
   item.localImages = [];
   $('img[src^="http://tankr.net/"]', contentTags).each(function() {
     item.localImages.push($(this).attr('src'));
-    return $(this).attr("src", "http://gptstatic.com/jiandan/" + $(this).attr('src').replace('http://tankr.net/', ''));
+    return $(this).attr("src", "http://gptstatic.com/jiandan" + $(this).attr('src').replace(/^[a-zA-Z]+:\/\/[^/]+/g, ''));
   });
   item.content = "";
   contentTags.each(function() {

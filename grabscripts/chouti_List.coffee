@@ -9,9 +9,12 @@ window.spGrab = ->
 
 		item.grade = parseInt $("a.digg-a", this).children("b").text()
 
-		item.content = atag.text()
-		imgsrc = $(this).children(".news-pic").children("img").attr("src").replace("=C60x60", "")
-		item.content += "<br/><img src='" + imgsrc + "' alt />"
+		item.content = $.trim atag.text()
+		imgsrc = $(this).children(".news-pic").children("img").attr("original").replace("=C60x60", "")
+		item.content += "<br/><img src=\"http://gptstatic.com/chouti" + imgsrc.replace(/^[a-zA-Z]+:\/\/[^/]+/g, "") + "\" alt />"
+
+		item.localImages = []
+		item.localImages.push imgsrc
 
 		data.push item
 	return data

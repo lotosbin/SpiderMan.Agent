@@ -15,15 +15,15 @@ window.spGrab = function() {
     choose_box = $('ul.choose_box', media_expand);
     if (choose_box) {
       $('a', choose_box).each(function() {
-        return item.content = +"<img src='http://ww3.sinaimg.cn/bmiddle/" + $(this).attr('action-data').substring(4) + ".jpg' alt />";
+        return item.content += "<img src='http://ww3.sinaimg.cn/bmiddle/" + $(this).attr('action-data').substring(4) + ".jpg' alt />";
       });
     } else {
-      item.content = +$('.smallcursor', media_expand).html();
+      item.content += $('.smallcursor', media_expand).html();
     }
     video_play = $('span.video_play', this);
     if (video_play) {
       video_play.click();
-      item.content = +$('.feed_list_media_bigvideoDiv', media_expand);
+      item.content += $('.feed_list_media_bigvideoDiv', media_expand);
     }
     return data.push(item);
   });

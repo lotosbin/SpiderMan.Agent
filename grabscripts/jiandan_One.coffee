@@ -11,7 +11,7 @@ window.spGrab = ->
     item.localImages = []
     $('img[src^="http://tankr.net/"]', contentTags).each ->
         item.localImages.push $(this).attr('src')
-        $(this).attr "src", "http://gptstatic.com/jiandan/" + $(this).attr('src').replace('http://tankr.net/', '')
+        $(this).attr "src", "http://gptstatic.com/jiandan" + $(this).attr('src').replace(/^[a-zA-Z]+:\/\/[^/]+/g, '')
 
     item.content = ""
     contentTags.each ->
