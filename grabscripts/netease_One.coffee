@@ -7,7 +7,8 @@ window.spGrab = ->
     item.title = $('#h1title').text()
     item.grade = parseInt $("span.js-tiecount").eq(0).text()
 
-    item.content = $('#endText').html()
+    if $.trim $('#endText').text()
+        item.content = $.trim $('#endText').html()
     item.images = []
     $('ul.nph_list_thumb>li').each ->
         item.images.push

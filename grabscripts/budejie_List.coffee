@@ -10,9 +10,6 @@ window.spGrab = ->
 		ThumbDowns = parseInt $("#noloveNum-#{item.providerId}", this).text()
 		item.grade = ThumbUps - ThumbDowns
 
-		item.content = $.trim $("#title-#{item.providerId}", this).html()
-		item.images = [
-			link: $(".web_pic img", this).attr('src')
-		]
+		item.content = $.trim $("#title-#{item.providerId}").html() + "<br />" + $("<div>").append($("#pic-#{item.providerId}").clone()).html()
 		data.push item
 	return data

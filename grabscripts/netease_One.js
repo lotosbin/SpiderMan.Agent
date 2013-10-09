@@ -6,7 +6,9 @@ window.spGrab = function() {
   item.sourceLink = window.location.href;
   item.title = $('#h1title').text();
   item.grade = parseInt($("span.js-tiecount").eq(0).text());
-  item.content = $('#endText').html();
+  if ($.trim($('#endText').text())) {
+    item.content = $.trim($('#endText').html());
+  }
   item.images = [];
   $('ul.nph_list_thumb>li').each(function() {
     return item.images.push({

@@ -43,7 +43,7 @@ CastTesk = (task)->
     if trace
       trace.forEach (t)->
         msgStack.push " -> " + t.file + ": " + t.line + (t.function ? " (in function '" + t.function + "')" : "")
-    console.log '~EvaluateError: ' + msgStack.join("\n")
+    console.log '~EvaluateError_#{task.source}_#{task.commandType}: ' + msgStack.join("\n")
 
   now = Date.now()
   pageGrab.open task.url, (status) -> #encodeURI(task.url)

@@ -74,7 +74,7 @@ CastTesk = function(task) {
         }));
       });
     }
-    return console.log('~EvaluateError: ' + msgStack.join("\n"));
+    return console.log('~EvaluateError_#{task.source}_#{task.commandType}: ' + msgStack.join("\n"));
   };
   now = Date.now();
   return pageGrab.open(task.url, function(status) {
