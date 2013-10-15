@@ -5,7 +5,12 @@ window.spGrab = ->
 		item = {}
 		atag = $('a.show-content', content)
 		item.providerId = content.attr("id").match(/\d+/g)[0]
-		item.sourceLink = "http://dig.chouti.com/link/" + item.providerId
+
+		objectIdPattern = /^http.+/g
+		if objectIdPattern.test atag.attr('href')
+			item.sourceLink = atag.attr('href')
+		else
+			item.sourceLink = "http://dig.chouti.com" + atag.attr('href')
 
 		item.grade = parseInt $("a.digg-a", this).children("b").text()
 
