@@ -13,8 +13,8 @@ websocket.onCallback = (info) ->
   switch info.command
     when "CastTesk"
       CastTesk info.task
-websocket.injectJs './jquery.1.10.2.min.js'
-websocket.injectJs './jquery.signalR-1.1.3.min.js'
+websocket.injectJs './jquery-2.1.0.min.js'
+websocket.injectJs './jquery.signalR-2.0.2.min.js'
 websocket.includeJs serverUrl + '/signalr/hubs', ->
   websocket.evaluate (serverUrl, agentName)->
     $.support.cors = false #todo: don't understand now
@@ -36,6 +36,9 @@ CastTesk = (task)->
   pageGrab = webpage.create()
   pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
   pageGrab.settings.loadImages = false
+  now = Date.now()
+  gbdate = {}
+
   pageGrab.onConsoleMessage = (msg) ->
     console.log '~Evaluate: ' + msg
   pageGrab.onError = (msg, trace) ->
@@ -44,29 +47,38 @@ CastTesk = (task)->
       trace.forEach (t)->
         msgStack.push " -> " + t.file + ": " + t.line + (t.function ? " (in function '" + t.function + "')" : "")
     console.log '~EvaluateError_#{task.source}_#{task.commandType}: ' + msgStack.join("\n")
+  pageGrab.onResourceReceived = (res) ->
+    if task.commandType == "Response"
+      gbdate = JSON.stringify res
 
-  now = Date.now()
   pageGrab.open task.url, (status) -> #encodeURI(task.url)
-    gbdate = {}
     if status isnt 'success'
       task.status = 2 #Fail
       task.error = 'Unable to access page'
     else
-      pageGrab.injectJs 'jquery.1.10.2.min.js'
-      pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}.js"
-      gbdate = pageGrab.evaluate ->
-        return spGrab()
-      pageGrab.close()
-      task.spend = (Date.now() - now)/1000
-      if not gbdate
-        task.status = 2 #Fail
-        task.error = 'gbdate is false'
-      else
+      if task.commandType == "Response"
         task.status = 3 #Done
+      else
+        if not task.withoutJquery
+          pageGrab.injectJs 'jquery-2.1.0.min.js'
+        if task.withUnderscore
+          pageGrab.injectJs 'underscore-min.js'
+        pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}.js"
+        gbdate = pageGrab.evaluate ->
+          return spGrab()
+        pageGrab.close()
+        task.spend = (Date.now() - now)/1000
+        if not gbdate
+          task.status = 2 #Fail
+          task.error = 'gbdate is false'
+        else
+          task.status = 3 #Done
+
     websocket.evaluate (serverUrl, task, data)->
       taskHub = $.connection.taskHub
       taskHub.server.doneTask task
       if task.status != 2 #not Fail
+        #console.log "data:" + JSON.stringify data
         $.post serverUrl + "/task/post" + task.articleType + task.commandType,
           taskjson: JSON.stringify task
           datajson: JSON.stringify data
