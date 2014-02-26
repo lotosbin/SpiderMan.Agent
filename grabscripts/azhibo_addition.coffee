@@ -22,16 +22,26 @@ window.spGrab = ->
         day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0]
         $('li', this).each ->
             if _.include caps, $('a:first', this).text()
-                console.log $('a:first', this).text()
                 links = $(this).children('a[target="_blank"]')
+
                 liveTag = links.map (i, el)->
                     return $(el).text()
                 .get() #get string, otherwise be jquery-obj http://goo.gl/bvhXb
+                liveVideos = _.intersection live, liveTag
+                liveVideos = liveVideos.map (el, i)->
+                    return {
+                        Name: el
+                        Url: ""
+                    }
+
+                time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
+                time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
+
                 list.push
-                    time: Date.parseString day + ' ' + $('span.time ', this).text(), "yyyy年M月d日 HH:mm"
-                    cap: $('a:first', this).text()
+                    time: time
+                    capString: $('a:first', this).text()
                     title: $('a:eq(1)', this).text()
-                    liveVideos: _.intersection live, liveTag
-                    liveText: "http://www.azhibo.com" + links.filter('contains("文字直播")').attr('href')
+                    liveVideos: liveVideos
+                    liveText: "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href')
 
     return list

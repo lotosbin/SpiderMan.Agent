@@ -22,11 +22,20 @@ window.spGrab = ->
                 liveTag = links.map (i, el)->
                     return $(el).text()
                 .get()
+                liveVideos = _.intersection liveForMobile, liveTag
+                liveVideos = liveVideos.map (el, i)->
+                    return {
+                        Name: el
+                        Url: ""
+                    }
+
+                time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
+                time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
                 data.push
-                    time: Date.parseString day + ' ' + $('span.time ', this).text(), "yyyy年M月d日 HH:mm"
+                    time: time
                     cap: $('a.league', this).text()
                     title: $('a.match-name', this)
-                    liveVideos: _.intersection liveForMobile, liveTag
-                    liveTextForMobile: links.filter('contains("文字直播")').attr('href')
+                    liveVideosForMobile: liveVideos
+                    liveTextForMobile: links.filter(':contains("文字直播")').attr('href')
 
     return data

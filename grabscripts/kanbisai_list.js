@@ -10,7 +10,15 @@ window.spGrab = function() {
     var matchs;
     matchs = el[Object.keys(el)[0]];
     return matchs.forEach(function(el,  index) {
-      var item, status;
+      var cateName, item, status, time;
+      cateName = "basket";
+      switch (el.cateId) {
+        case "1":
+          cateName = "football";
+          break;
+        case "2":
+          cateName = "basket";
+      }
       status = 0;
       switch (el.period) {
         case "比赛前":
@@ -22,13 +30,15 @@ window.spGrab = function() {
         case "已结束":
           status = 2;
       }
+      time = Date.parseString(el.startTime, "yyyy-MM-dd HH:mm:ss");
+      time.setHours(time.getHours() - time.getTimezoneOffset() / 60);
       item = {
-        providerId: el.matchId,
-        cap: el.competitionName,
+        kanbisaiLink: "http://sports.qq.com/kbsweb/" + cateName + ".htm?matchId=" + el.matchId + "&competitionId=" + el.competitionId,
+        capString: el.competitionName,
         status: status,
-        teamName: el.homeName,
-        teamNameForGuest: el.awayName,
-        time: Date.parseString(el.startTime, "yyyy-MM-dd HH:mm:ss"),
+        teamNameChinese: el.homeName,
+        teamNameChineseeForGuest: el.awayName,
+        time: time,
         point: el.homeGoal,
         pointForGuest: el.awayGoal
       };

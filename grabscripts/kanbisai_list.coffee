@@ -9,24 +9,27 @@ window.spGrab = ->
 	body.forEach (el, index)->
 		matchs = el[Object.keys(el)[0]]
 		matchs.forEach (el, index)->
-			# cateName = "basket"
-			# switch el.cateId
-			# 	when "1" then cateName = "football"
-			# 	when "2" then cateName = "basket" #kanbisai.com这里有bug，除了足球以外的项目都属于basket.htm页面
+			cateName = "basket"
+			switch el.cateId
+				when "1" then cateName = "football"
+				when "2" then cateName = "basket" #kanbisai.com这里有bug，除了足球以外的项目都属于basket.htm页面
 			status = 0
 			switch el.period
 				when "比赛前" then status = 0
 				when "比赛中" then status = 1
 				when "已结束" then status = 2
+			time = Date.parseString el.startTime, "yyyy-MM-dd HH:mm:ss"
+			time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
 			item =
-				providerId: el.matchId
-				# sourceLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
-				cap: el.competitionName #后台根据cap判断matchType
+				#kanbisaiId: el.matchId
+				kanbisaiLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
+				capString: el.competitionName #后台根据cap判断matchType
 				status: status
-				teamName: el.homeName
-				teamNameForGuest: el.awayName
-				time: Date.parseString el.startTime, "yyyy-MM-dd HH:mm:ss"
+				teamNameChinese: el.homeName
+				teamNameChineseeForGuest: el.awayName
+				time: time
 				point: el.homeGoal
 				pointForGuest: el.awayGoal
+
 			data.push item
 	return data

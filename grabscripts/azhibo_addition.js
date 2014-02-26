@@ -11,18 +11,27 @@ window.spGrab = function() {
     var day;
     day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0];
     return $('li', this).each(function() {
-      var liveTag;
+      var links, liveTag, liveVideos, time;
       if (_.include(caps, $('a:first', this).text())) {
-        console.log($('a:first', this).text());
-        liveTag = $(this).children('a[target="_blank"]').map(function(i, el) {
+        links = $(this).children('a[target="_blank"]');
+        liveTag = links.map(function(i, el) {
           return $(el).text();
         }).get();
+        liveVideos = _.intersection(live, liveTag);
+        liveVideos = liveVideos.map(function(el, i) {
+          return {
+            Name: el,
+            Url: ""
+          };
+        });
+        time = Date.parseString(day + $('span.time ', this).text(), "yyyy年M月d日HH:mm");
+        time.setHours(time.getHours() - time.getTimezoneOffset() / 60);
         return list.push({
-          time: Date.parseString(day + ' ' + $('span.time ', this).text(), "yyyy年M月d日 HH:mm"),
-          cap: $('a:first', this).text(),
+          time: time,
+          capString: $('a:first', this).text(),
           title: $('a:eq(1)', this).text(),
-          liveVideos: _.intersection(live, liveTag),
-          liveText: $(this).children('a:contains("Text2")')
+          liveVideos: liveVideos,
+          liveText: "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href')
         });
       }
     });
