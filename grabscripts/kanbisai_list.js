@@ -37,7 +37,7 @@ window.spGrab = function() {
         capString: el.competitionName,
         status: status,
         teamNameChinese: el.homeName,
-        teamNameChineseeForGuest: el.awayName,
+        teamNameChineseForGuest: el.awayName,
         time: time,
         point: el.homeGoal,
         pointForGuest: el.awayGoal

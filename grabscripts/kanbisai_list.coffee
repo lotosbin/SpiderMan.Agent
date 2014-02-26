@@ -26,7 +26,7 @@ window.spGrab = ->
 				capString: el.competitionName #后台根据cap判断matchType
 				status: status
 				teamNameChinese: el.homeName
-				teamNameChineseeForGuest: el.awayName
+				teamNameChineseForGuest: el.awayName
 				time: time
 				point: el.homeGoal
 				pointForGuest: el.awayGoal
