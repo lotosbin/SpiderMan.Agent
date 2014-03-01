@@ -4,8 +4,8 @@ eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 ;
 window.spGrab = function() {
   var caps, list, live;
-  caps = ['NBA', 'CBA', '男篮世锦赛', '男篮亚锦赛', '德甲', '西甲', '意甲', '英超', '法甲', '欧冠', '世界杯', '欧洲杯', '美洲杯', '亚洲杯', '亚洲冠军杯', '解放者杯', '足总杯', '国王杯', '足协杯'];
-  live = ['搜狐高清CBA直播1台', '搜狐高清CBA直播2台', '搜狐高清CBA直播2台', 'CCTV5(无插件)', 'CCTV5(CNTV高清)', 'CCTV5+(无插件)', 'CCTV5+(CNTV)', 'PPTVCBA1', 'PPTVCBA2'];
+  caps = ['NBA', 'CBA', '男篮世锦赛', '男篮亚锦赛', '德甲', '西甲', '意甲', '英超', '法甲', '欧冠', '世界杯', '欧洲杯', '美洲杯', '亚洲杯', '亚洲冠军杯', '欧联杯', '足总杯', '国王杯', '足协杯'];
+  live = ['新浪NBA(需要装插件)', '腾讯直播(无插件)', '腾讯直播2(无插件)', '腾讯NBA(无插件)', '搜狐高清CBA直播1台', '搜狐高清CBA直播2台', '搜狐高清CBA直播3台', 'CCTV5(CNTV高清)', '北京体育(CNTV)', '新浪德甲(Sinatv)', '新浪英超直播2(sinatv)', '新浪意甲直播(Sinatv)', '新浪西甲直播(Sinatv)', '新浪英超直播3(Sinatv)', '新浪意甲直播2(Sinatv)', '新浪法甲(Sinatv)', '新浪西甲直播2(Sinatv)', 'PPTVCBA2', 'PPTVCBA1', '广东体育', '欧洲足球(无插件)', 'CCTV5(无插件)', '北京体育(无插件)', '广东体育(无插件)', '广东体育(PPStream)'];
   list = [];
   $('#contentCanvas>.box:not(".tiny-box")').each(function() {
     var day;

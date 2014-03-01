@@ -33,7 +33,7 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
       window.callPhantom
         command: "CastTesk"
         task: task
-    #$.connection.hub.logging = true
+    # $.connection.hub.logging = true
     $.connection.hub.start().done ->
       $.support.cors = true
       #console.log taskHub.connection.id
