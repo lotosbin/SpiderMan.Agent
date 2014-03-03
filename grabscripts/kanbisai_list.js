@@ -34,7 +34,7 @@ window.spGrab = function() {
       time.setHours(time.getHours() - time.getTimezoneOffset() / 60);
       item = {
         kanbisaiLink: "http://sports.qq.com/kbsweb/" + cateName + ".htm?matchId=" + el.matchId + "&competitionId=" + el.competitionId,
-        capString: el.competitionName,
+        capString: el.competitionName === "CBA季后赛" ? "CBA" : el.competitionName,
         status: status,
         teamNameChinese: el.homeName,
         teamNameChineseForGuest: el.awayName,

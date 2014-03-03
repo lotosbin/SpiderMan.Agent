@@ -23,7 +23,7 @@ window.spGrab = ->
 			item =
 				#kanbisaiId: el.matchId
 				kanbisaiLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
-				capString: el.competitionName #后台根据cap判断matchType
+				capString: if el.competitionName is "CBA季后赛" then "CBA" else el.competitionName #后台根据cap判断matchType
 				status: status
 				teamNameChinese: el.homeName
 				teamNameChineseForGuest: el.awayName
