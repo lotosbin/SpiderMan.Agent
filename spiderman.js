@@ -82,20 +82,29 @@ CastTesk = function(task) {
     return console.log('~Evaluate: ' + msg);
   };
   pageGrab.onError = function(msg, trace) {
-    console.log("~EvaluateError_" + task.source + "_" + task.commandType + ":");
+    console.error("~EvaluateError_" + task.source + "_" + task.commandType + ":");
     return _onError(msg, trace);
   };
-  pageGrab.onResourceReceived = function(res) {
-    if (task.commandType === "Response") {
-      return gbdate = JSON.stringify(res);
+  pageGrab.onResourceRequested = function(data, request) {
+    var result;
+    if (/http:\/\/.+?\.css/g.test(data["url"]) || data.headers["Content-Type"] === "text/css") {
+      console.log("~BLOCKED CSS: " + data.url);
+      request.abort();
+      return;
+    }
+    result = /^https?:\/\/([^\/]+)/.exec(data.url);
+    if (result) {
+      if (/\.doubleclick\./.test(result[1] || /\.baidustatic\.com$/.test(result[1] || /\.alimama\.cn$/.test(result[1] || /\.google-analytics\.com$/.test(result[1] || /\.baodu\.com$/.test(result[1] || /\.cnzz\.com$/.test(result[1]))))))) {
+        console.log("~BLOCKED AD: " + result[1]);
+        return request.abort();
+      }
     }
   };
+  pageGrab.onResourceReceived = function(data, request) {};
   return pageGrab.open(task.url, function(status) {
     if (status !== 'success') {
       task.status = 2;
       task.error = 'Unable to access page';
-    } else if (task.commandType === "Response") {
-      task.status = 3;
     } else {
       if (!task.withoutJquery) {
         pageGrab.injectJs('jquery-2.1.0.min.js');
