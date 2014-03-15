@@ -62,7 +62,12 @@ CastTesk = (task)->
       return
     result = /^https?:\/\/([^\/]+)/.exec data.url #adblock http://goo.gl/8Cn9ZE
     if result
-      if /\.doubleclick\./.test result[1] or /\.baidustatic\.com$/.test result[1] or /\.alimama\.cn$/.test result[1]
+      if /\.doubleclick\./.test result[1]
+        or /\.baidustatic\.com$/.test result[1]
+        or /\.alimama\.cn$/.test result[1]
+        or /\.google-analytics\.com$/.test result[1]
+        or /\.baodu\.com$/.test result[1]
+        or /\.cnzz\.com$/.test result[1]
         console.log "~BLOCKED AD: " + result[1]
         request.abort()
   pageGrab.onResourceReceived = (data, request) ->
