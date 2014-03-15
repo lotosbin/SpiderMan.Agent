@@ -40,7 +40,9 @@ window.spGrab = function() {
         teamNameChineseForGuest: el.awayName,
         time: time,
         point: el.homeGoal,
-        pointForGuest: el.awayGoal
+        pointForGuest: el.awayGoal,
+        quarter: el.quarter,
+        quarterTime: el.quarterTime
       };
       return data.push(item);
     });
