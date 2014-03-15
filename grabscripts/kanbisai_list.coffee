@@ -30,6 +30,8 @@ window.spGrab = ->
 				time: time
 				point: el.homeGoal
 				pointForGuest: el.awayGoal
+				quarter: el.quarter
+				quarterTime: el.quarterTime
 
 			data.push item
 	return data
