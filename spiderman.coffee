@@ -53,18 +53,28 @@ CastTesk = (task)->
   pageGrab.onConsoleMessage = (msg) ->
     console.log '~Evaluate: ' + msg
   pageGrab.onError = (msg, trace) ->
-    console.log "~EvaluateError_#{task.source}_#{task.commandType}:"
+    console.error "~EvaluateError_#{task.source}_#{task.commandType}:"
     _onError msg, trace
-  pageGrab.onResourceReceived = (res) ->
-    if task.commandType == "Response"
-      gbdate = JSON.stringify res
+  pageGrab.onResourceRequested = (data, request) ->
+    if (/http:\/\/.+?\.css/g).test(data["url"]) or data.headers["Content-Type"] is "text/css" #http://goo.gl/3P8ltr
+      console.log "~BLOCKED CSS: " + data.url
+      request.abort()
+      return
+    result = /^https?:\/\/([^\/]+)/.exec data.url #adblock http://goo.gl/8Cn9ZE
+    if result
+      if /\.doubleclick\./.test result[1] or /\.baidustatic\.com$/.test result[1] or /\.alimama\.cn$/.test result[1]
+        console.log "~BLOCKED AD: " + result[1]
+        request.abort()
+  pageGrab.onResourceReceived = (data, request) ->
+    # if task.commandType == "Response"
+    #   gbdate = JSON.stringify data
 
   pageGrab.open task.url, (status) -> #encodeURI(task.url)
     if status isnt 'success'
       task.status = 2 #Fail
       task.error = 'Unable to access page'
-    else if task.commandType == "Response"
-        task.status = 3 #Done
+    # else if task.commandType == "Response"
+    #     task.status = 3 #Done
     else
       if not task.withoutJquery
         pageGrab.injectJs 'jquery-2.1.0.min.js'
