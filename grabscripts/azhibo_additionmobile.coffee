@@ -6,8 +6,8 @@ eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
 window.spGrab = ->
     caps = ['NBA','CBA','男篮世锦赛','男篮亚锦赛','德甲','西甲','意甲','英超','法甲','欧冠','世界杯','欧洲杯','美洲杯','亚洲杯','亚冠','欧联杯','足总杯','国王杯','足协杯']
     live = ['腾讯直播(无插件)','腾讯直播2(无插件)','腾讯NBA(无插件)','搜狐高清CBA直播1台','搜狐高清CBA直播2台','搜狐高清CBA直播3台','新浪NBA(需要装插件)','CCTV5(CNTV高清)','北京体育(CNTV)','新浪德甲(Sinatv)','新浪英超直播2(sinatv)','新浪意甲直播(Sinatv)','新浪西甲直播(Sinatv)','新浪英超直播3(Sinatv)','新浪意甲直播2(Sinatv)','新浪法甲(Sinatv)','新浪西甲直播2(Sinatv)','风云足球(CNTV)','PPTVCBA2','PPTVCBA1','乐视TV12(无插件)','乐视TV2(无插件)','乐视TV1(无插件)','乐视TV9(无插件)','乐视TV10(无插件)','乐视TV11(无插件)','广东体育','重庆卫视(无插件)','纬来体育(无插件)','欧洲足球(无插件)','CCTV5(无插件)','北京体育(无插件)','广东体育(无插件)','广东体育(PPStream)']
-
     data = []
+    console.log "begin grab!"
     $('#match-container>.box').slice(1).each ->
         day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0]
         $('li.match', this).each ->
@@ -25,11 +25,12 @@ window.spGrab = ->
 
                 time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
                 time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
+
                 data.push
                     time: time
-                    cap: $('a.league', this).text()
-                    title: $('a.match-name', this)
+                    capString: $('a.league', this).text()
+                    title: $('a.match-name', this).text()
                     liveVideosForMobile: liveVideos
                     liveTextForMobile: links.filter(':contains("文字直播")').attr('href')
-
+    console.log JSON.stringify data
     return data
