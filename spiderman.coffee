@@ -1,5 +1,6 @@
 system = require "system"
 webpage = require "webpage"
+fs = require 'fs'
 if system.args.length isnt 3
   console.log 'serverUrl and agentName is necessary!'
   phantom.exit 1
@@ -21,6 +22,13 @@ websocket.onCallback = (info) ->
   switch info.command
     when "CastTesk"
       CastTesk info.task
+    when "UpdateScript"
+      console.log "~UpdateScript: " + info.file
+      try
+        fs.write "grabscripts/"+info.file, info.content
+      catch e
+        console.log e
+
 websocket.injectJs './jquery-2.1.0.min.js'
 #1.2.1+ 版本castTesk不触发，未知原因，不浪费时间在这里 https://github.com/SignalR/SignalR/issues/2904
 websocket.injectJs './jquery.signalR-2.0.2.min.js'
@@ -33,6 +41,11 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
       window.callPhantom
         command: "CastTesk"
         task: task
+    taskHub.client.updateScript = (file, content) ->
+      window.callPhantom
+        command: "UpdateScript"
+        file: file
+        content: content
     # $.connection.hub.logging = true
     $.connection.hub.start().done ->
       $.support.cors = true
@@ -70,7 +83,7 @@ CastTesk = (task)->
       /\.cnzz\.com$/.test result[1]
         console.log "~BLOCKED AD: " + result[1]
         request.abort()
-  pageGrab.onResourceReceived = (data, request) ->
+  # pageGrab.onResourceReceived = (data, request) ->
     # if task.commandType == "Response"
     #   gbdate = JSON.stringify data
 
@@ -85,6 +98,8 @@ CastTesk = (task)->
         pageGrab.injectJs 'jquery-2.1.0.min.js'
       if task.withUnderscore
         pageGrab.injectJs 'underscore-min.js'
+      if task.withDate
+        pageGrab.injectJs 'date.js'
       pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}.js"
       gbdate = pageGrab.evaluate ->
         return spGrab()
