@@ -13,7 +13,7 @@ window.spGrab = function() {
         liveTag = links.map(function(i, el) {
           return $(el).text();
         }).get();
-        liveVideos = liveVideos.map(function(el, i) {
+        liveVideos = liveTag.map(function(el, i) {
           return {
             Name: el,
             Url: ""

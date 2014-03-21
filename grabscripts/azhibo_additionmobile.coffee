@@ -10,7 +10,7 @@ window.spGrab = ->
                     return $(el).text()
                 .get()
                 #liveVideos = _.intersection live, liveTag  #转移到server端的工作
-                liveVideos = liveVideos.map (el, i)->
+                liveVideos = liveTag.map (el, i)->
                     return {
                         Name: el
                         Url: ""

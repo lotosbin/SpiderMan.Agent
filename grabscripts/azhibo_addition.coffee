@@ -10,7 +10,7 @@ window.spGrab = ->
                     return $(el).text()
                 .get() #get string, otherwise be jquery-obj http://goo.gl/bvhXb
                 #liveVideos = _.intersection live, liveTag #转移到server端的工作
-                liveVideos = liveVideos.map (el, i)->
+                liveVideos = liveTag.map (el, i)->
                     return {
                         Name: el
                         Url: ""
