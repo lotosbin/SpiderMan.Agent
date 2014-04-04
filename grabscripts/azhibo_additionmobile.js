@@ -3,7 +3,7 @@ window.spGrab = function() {
   var caps, data;
   caps = ['NBA', 'CBA', '男篮世锦赛', '男篮亚锦赛', '德甲', '西甲', '意甲', '英超', '法甲', '欧冠', '世界杯', '欧洲杯', '美洲杯', '亚洲杯', '亚冠', '欧联杯', '足总杯', '国王杯', '联赛杯', '意大利杯', '德国杯', '足协杯'];
   data = [];
-  $('#match-container>.box').slice(1).each(function() {
+  $('#match-container>.box').slice(1, 3).each(function() {
     var day;
     day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0];
     return $('li.match', this).each(function() {
