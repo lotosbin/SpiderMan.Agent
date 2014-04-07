@@ -35,7 +35,7 @@ websocket.injectJs './jquery-2.1.0.min.js'
 websocket.injectJs './jquery.signalR-2.0.2.min.js'
 websocket.includeJs serverUrl + '/signalr/hubs', ->
   websocket.evaluate (serverUrl, agentName)->
-    $.support.cors = false #todo: don't understand
+    #$.support.cors = false #应该是webkit执行localfile时的issus，因为问题不明显也不被重视 http://goo.gl/S34e2n
     $.connection.hub.url = serverUrl + '/signalr'
     taskHub = $.connection.taskHub
     taskHub.client.castTesk = (task) ->
