@@ -2,6 +2,8 @@
 .DS_Store
 _build/
 
+*.error
+
 # Windows image file caches
 Thumbs.db
 Desktop.ini

@@ -6,6 +6,7 @@ if system.args.length isnt 3
   phantom.exit 1
 agentName = system.args[1]
 serverUrl = system.args[2]
+grabTime = {}
 
 _onError = (msg, trace) ->
   msgStack = [msg]
@@ -55,7 +56,24 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
       console.log 'connect fail. ' + msg
   , serverUrl, agentName
 
+setInterval ->
+  checkTime = (Date.now() - grabTime)/1000
+  console.log '----- Check: ' + checkTime
+  if checkTime > 300 # 5min
+    console.log '----- Interval grabTime: ' + checkTime
+    fs.write "TimeOutError_" + Date.now() + '.error', checkTime
+    websocket.evaluate (serverUrl, agentName)->
+      taskHub = $.connection.taskHub
+      $.connection.hub.start().done ->
+        $.support.cors = true
+        taskHub.server.registerAgent agentName
+      .fail (msg)->
+        console.log 'connect fail. ' + msg
+    , serverUrl, agentName
+, 5000 # 5sec
+
 CastTesk = (task)->
+  grabTime = Date.now()
   console.log "~CastTesk: " + JSON.stringify task
   pageGrab = webpage.create()
   pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
