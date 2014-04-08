@@ -67,7 +67,7 @@ setInterval ->
       .fail (msg)->
         console.log 'connect fail. ' + msg
     , serverUrl, agentName
-, 5000 # 5sec
+, 60000 # 1min
 
 CastTesk = (task)->
   grabTime = Date.now()
