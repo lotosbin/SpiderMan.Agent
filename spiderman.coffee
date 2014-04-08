@@ -49,7 +49,6 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
         content: content
     # $.connection.hub.logging = true
     $.connection.hub.start().done ->
-      $.support.cors = true
       #console.log taskHub.connection.id
       taskHub.server.registerAgent agentName
     .fail (msg)->
@@ -64,7 +63,6 @@ setInterval ->
     websocket.evaluate (serverUrl, agentName)->
       taskHub = $.connection.taskHub
       $.connection.hub.start().done ->
-        $.support.cors = true
         taskHub.server.registerAgent agentName
       .fail (msg)->
         console.log 'connect fail. ' + msg
