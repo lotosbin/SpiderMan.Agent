@@ -50,6 +50,7 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
     # $.connection.hub.logging = true
     $.connection.hub.start().done ->
       #console.log taskHub.connection.id
+      $.support.cors = true #如果不设置，$.post serverUrl 会失效，原因未知
       taskHub.server.registerAgent agentName
     .fail (msg)->
       console.log 'connect fail. ' + msg
@@ -59,6 +60,7 @@ setInterval ->
   checkTime = (Date.now() - grabTime)/1000
   console.log '----- checkTime: ' + checkTime
   if checkTime > 300 # 5min
+    grabTime = Date.now()
     console.log '----- Interval grabTime: ' + checkTime
     fs.write "TimeOutError_" + Date.now() + '.error', checkTime
     websocket.evaluate (serverUrl, agentName)->
@@ -134,4 +136,5 @@ CastTesk = (task)->
         $.post serverUrl + "/task/post" + task.articleType + task.commandType,
           taskjson: JSON.stringify task
           datajson: JSON.stringify data
+        #console.log "websocket data" + JSON.stringify data
     , serverUrl, task, gbdate
