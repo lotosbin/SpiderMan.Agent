@@ -35,7 +35,9 @@ websocket.injectJs './jquery-2.1.0.min.js'
 websocket.injectJs './jquery.signalR-2.0.2.min.js'
 websocket.includeJs serverUrl + '/signalr/hubs', ->
   websocket.evaluate (serverUrl, agentName)->
-    $.support.cors = false #应该是webkit执行localfile时的issus，因为问题不明显也不被重视 http://goo.gl/S34e2n
+    #应该是webkit执行localfile时的issus，因为问题不明显也不被重视 http://goo.gl/S34e2n
+    #hub.start()链接过一次以后重新start()链接不需要确保cors == flase
+    $.support.cors = false
     $.connection.hub.url = serverUrl + '/signalr'
     taskHub = $.connection.taskHub
     taskHub.client.castTesk = (task) ->
@@ -50,7 +52,7 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
     # $.connection.hub.logging = true
     $.connection.hub.start().done ->
       #console.log taskHub.connection.id
-      $.support.cors = true #如果不设置，$.post serverUrl 会失效，原因未知
+      $.support.cors = true #如果不设置，$.post serverUrl 会失效，因为$.post不会自动使用jsonp请求
       taskHub.server.registerAgent agentName
     .fail (msg)->
       console.log 'connect fail. ' + msg
