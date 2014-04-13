@@ -61,7 +61,7 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
 setInterval ->
   checkTime = (Date.now() - grabTime)/1000
   console.log '----- checkTime: ' + checkTime
-  if checkTime > 300 # 5min
+  if checkTime > 120 # 2min
     grabTime = Date.now()
     console.log '----- Interval grabTime: ' + checkTime
     fs.write "TimeOutError_" + Date.now() + '.error', checkTime
