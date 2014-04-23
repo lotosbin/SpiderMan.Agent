@@ -1,7 +1,7 @@
 window.spGrab = ->
 	item =
 		KanbisaiLink: window.location.href
-	embed = $('#liveingArea').html()
+	embed = $('#liveingArea').html().trim()
 	if embed
 		item.bestVideos = embed
 	console.log "bestVideos: "+item.bestVideos

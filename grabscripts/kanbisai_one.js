@@ -4,7 +4,7 @@ window.spGrab = function() {
   item = {
     KanbisaiLink: window.location.href
   };
-  embed = $('#liveingArea').html();
+  embed = $('#liveingArea').html().trim();
   if (embed) {
     item.bestVideos = embed;
   }
