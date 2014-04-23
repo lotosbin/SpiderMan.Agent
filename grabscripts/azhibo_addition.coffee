@@ -19,11 +19,14 @@ window.spGrab = ->
                 time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
                 time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
 
-                data.push
+                item =
                     time: time
                     capString: $('a:first', this).text()
                     title: $('a:eq(1)', this).text()
                     liveVideos: liveVideos
-                    liveText: "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href')
+
+                if links.filter(':contains("文字直播")').size()
+                    item.liveText = "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href')
+                data.push item
 
     return data

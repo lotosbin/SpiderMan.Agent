@@ -7,7 +7,7 @@ window.spGrab = function() {
     var day;
     day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0];
     return $('li', this).each(function() {
-      var links, liveTag, liveVideos, time;
+      var item, links, liveTag, liveVideos, time;
       if (_.include(caps, $('a:first', this).text())) {
         links = $(this).children('a[target="_blank"]');
         liveTag = links.map(function(i, el) {
@@ -21,13 +21,16 @@ window.spGrab = function() {
         });
         time = Date.parseString(day + $('span.time ', this).text(), "yyyy年M月d日HH:mm");
         time.setHours(time.getHours() - time.getTimezoneOffset() / 60);
-        return data.push({
+        item = {
           time: time,
           capString: $('a:first', this).text(),
           title: $('a:eq(1)', this).text(),
-          liveVideos: liveVideos,
-          liveText: "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href')
-        });
+          liveVideos: liveVideos
+        };
+        if (links.filter(':contains("文字直播")').size()) {
+          item.liveText = "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href');
+        }
+        return data.push(item);
       }
     });
   });
