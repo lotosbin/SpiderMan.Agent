@@ -41,9 +41,10 @@ websocket.includeJs serverUrl + '/signalr/hubs', ->
     $.connection.hub.url = serverUrl + '/signalr'
     taskHub = $.connection.taskHub
     taskHub.client.castTesk = (task) ->
-      window.callPhantom
-        command: "CastTesk"
-        task: task
+      if task && task.url
+        window.callPhantom
+          command: "CastTesk"
+          task: task
     taskHub.client.updateScript = (file, content) ->
       window.callPhantom
         command: "UpdateScript"
@@ -64,11 +65,12 @@ setInterval ->
   if checkTime > 120 # 2min
     grabTime = Date.now()
     console.log '----- Interval grabTime: ' + checkTime
-    fs.write "TimeOutError_" + Date.now() + '.error', checkTime
+    # fs.write "TimeOutError_" + Date.now() + '.error', checkTime
     websocket.evaluate (serverUrl, agentName)->
       taskHub = $.connection.taskHub
       $.connection.hub.start().done ->
         taskHub.server.registerAgent agentName
+        console.log 're-connect done. '
       .fail (msg)->
         console.log 'connect fail. ' + msg
     , serverUrl, agentName
