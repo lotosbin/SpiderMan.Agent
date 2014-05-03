@@ -1,8 +1,8 @@
 #!/bin/bash
-code="";
-if [ -n $1 ] 
+name="";
+if [ -n $1 ]
 then
-	code="?code=$1"
+    name="xiuhao"
 fi
-url="http://qing.xiuhao.com/get_task$code"
-phantomjs xiuhao.coffee  $url
+serverUrl="http://baozoubisai.com:2083"
+phantomjs spiderman.coffee $name $serverUrl
