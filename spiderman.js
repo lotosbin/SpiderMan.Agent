@@ -69,10 +69,12 @@ websocket.includeJs(serverUrl + '/signalr/hubs', function() {
     $.connection.hub.url = serverUrl + '/signalr';
     taskHub = $.connection.taskHub;
     taskHub.client.castTesk = function(task) {
-      return window.callPhantom({
-        command: "CastTesk",
-        task: task
-      });
+      if (task && task.url) {
+        return window.callPhantom({
+          command: "CastTesk",
+          task: task
+        });
+      }
     };
     taskHub.client.updateScript = function(file, content) {
       return window.callPhantom({
@@ -97,12 +99,12 @@ setInterval(function() {
   if (checkTime > 120) {
     grabTime = Date.now();
     console.log('----- Interval grabTime: ' + checkTime);
-    fs.write("TimeOutError_" + Date.now() + '.error', checkTime);
     return websocket.evaluate(function(serverUrl, agentName) {
       var taskHub;
       taskHub = $.connection.taskHub;
       return $.connection.hub.start().done(function() {
-        return taskHub.server.registerAgent(agentName);
+        taskHub.server.registerAgent(agentName);
+        return console.log('re-connect done. ');
       }).fail(function(msg) {
         return console.log('connect fail. ' + msg);
       });
@@ -115,7 +117,11 @@ CastTesk = function(task) {
   grabTime = Date.now();
   console.log("~CastTesk: " + JSON.stringify(task));
   pageGrab = webpage.create();
-  pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36';
+  if (task.userAgent) {
+    pageGrab.settings.userAgent = task.userAgent;
+  } else {
+    pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36';
+  }
   pageGrab.settings.loadImages = false;
   now = Date.now();
   gbdate = {};

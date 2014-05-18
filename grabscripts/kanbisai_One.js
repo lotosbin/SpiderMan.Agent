@@ -8,6 +8,5 @@ window.spGrab = function() {
   if (embed) {
     item.bestVideos = embed;
   }
-  console.log("bestVideos: " + item.bestVideos);
   return item;
 };

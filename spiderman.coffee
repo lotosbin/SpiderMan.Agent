@@ -80,7 +80,10 @@ CastTesk = (task)->
   grabTime = Date.now()
   console.log "~CastTesk: " + JSON.stringify task
   pageGrab = webpage.create()
-  pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
+  if task.userAgent
+    pageGrab.settings.userAgent = task.userAgent
+  else
+    pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
   pageGrab.settings.loadImages = false
   now = Date.now()
   gbdate = {}
