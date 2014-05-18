@@ -1,7 +1,7 @@
 window.spGrab = ->
-	item =
-		KanbisaiLink: window.location.href
-	embed = $('#liveingArea').html().trim()
-	if embed
-		item.bestVideos = embed
-	return item
+    item =
+        kanbisaiJson: window.location.href
+    body = JSON.parse(document.body.innerHTML)[1]
+    if body.videoNews
+        item.kanbisaiVid = body.videoNews[0].vid
+    return item

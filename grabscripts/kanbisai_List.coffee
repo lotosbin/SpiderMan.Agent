@@ -4,10 +4,10 @@ window.spGrab = ->
 	body.forEach (el, index)->
 		matchs = el[Object.keys(el)[0]]
 		matchs.forEach (el, index)->
-			# cateName = "basket"
-			# switch el.cateId
-			# 	when "1" then cateName = "football"
-			# 	when "2" then cateName = "basket" #kanbisai.com这里有bug，除了足球以外的项目都属于basket.htm页面
+			cateName = "basket"
+			switch el.cateId
+				when "1" then cateName = "football"
+				when "2" then cateName = "basket" #kanbisai.com这里有bug，除了足球以外的项目都属于basket.htm页面
 			status = 0
 			switch el.period
 				when "比赛前" then status = 0
@@ -18,8 +18,7 @@ window.spGrab = ->
 			if el.competitionName.match /CBA/
 				el.competitionName = "CBA"
 			item =
-				#kanbisaiId: el.matchId
-				#kanbisaiLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
+				kanbisaiLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
 				kanbisaiJson: "http://sportswebapi.qq.com/match/view?competitionId=#{el.competitionId}&matchId=#{el.matchId}"
 				capString: el.competitionName #后台根据cap判断matchType
 				status: status
