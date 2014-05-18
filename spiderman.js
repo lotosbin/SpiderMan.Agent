@@ -117,8 +117,8 @@ CastTesk = function(task) {
   grabTime = Date.now();
   console.log("~CastTesk: " + JSON.stringify(task));
   pageGrab = webpage.create();
-  if (task.userAgent) {
-    pageGrab.settings.userAgent = task.userAgent;
+  if (task.isMobile) {
+    pageGrab.settings.userAgent = "mozilla/5.0 (iphone; cpu iphone os 7_0 like mac os x; en-us) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11a465 safari/9537.53";
   } else {
     pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36';
   }
@@ -161,7 +161,11 @@ CastTesk = function(task) {
       if (task.withDate) {
         pageGrab.injectJs('date.js');
       }
-      pageGrab.injectJs("grabscripts/" + task.source + "_" + task.commandType + ".js");
+      if (task.isMobile) {
+        pageGrab.injectJs("grabscripts/" + task.source + "_" + task.commandType + "_mobi.js");
+      } else {
+        pageGrab.injectJs("grabscripts/" + task.source + "_" + task.commandType + ".js");
+      }
       gbdate = pageGrab.evaluate(function() {
         return spGrab();
       });
@@ -175,11 +179,15 @@ CastTesk = function(task) {
     }
     pageGrab.close();
     return websocket.evaluate(function(serverUrl, task, data) {
-      var taskHub;
+      var posturl, taskHub;
       taskHub = $.connection.taskHub;
       taskHub.server.doneTask(task);
       if (task.status !== 2) {
-        return $.post(serverUrl + "/task/post" + task.articleType + task.commandType, {
+        posturl = serverUrl + "/task/post" + task.articleType + task.commandType;
+        if (task.isMobile) {
+          posturl += '_mobi';
+        }
+        return $.post(posturl, {
           taskjson: JSON.stringify(task),
           datajson: JSON.stringify(data)
         });
