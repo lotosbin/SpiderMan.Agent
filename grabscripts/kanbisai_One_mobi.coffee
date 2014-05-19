@@ -3,5 +3,5 @@ window.spGrab = ->
         KanbisaiLink: window.location.href
     embed = $('#liveingArea').html().trim()
     if embed
-        item.bestVideo = embed
+        item.bestVideoMobi = embed
     return item

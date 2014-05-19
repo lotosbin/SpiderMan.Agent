@@ -81,7 +81,7 @@ CastTesk = (task)->
   console.log "~CastTesk: " + JSON.stringify task
   pageGrab = webpage.create()
   if task.isMobile
-    pageGrab.settings.userAgent = "mozilla/5.0 (iphone; cpu iphone os 7_0 like mac os x; en-us) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11a465 safari/9537.53"
+    pageGrab.settings.userAgent = "Mozilla/5.0 (iphone; cpu iphone os 7_0 like mac os x; en-us) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11a465 safari/9537.53"
   else
     pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
   pageGrab.settings.loadImages = false

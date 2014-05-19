@@ -6,7 +6,7 @@ window.spGrab = function() {
   };
   embed = $('#liveingArea').html().trim();
   if (embed) {
-    item.bestVideo = embed;
+    item.bestVideoMobi = embed;
   }
   return item;
 };
