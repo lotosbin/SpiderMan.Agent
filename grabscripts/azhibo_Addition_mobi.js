@@ -23,7 +23,7 @@ window.spGrab = function() {
         time.setHours(time.getHours() - time.getTimezoneOffset() / 60);
         item = {
           time: time,
-          capString: $('a.league', this).text(),
+          capString: _capString,
           title: $('a.match-name', this).text(),
           liveVideosForMobile: liveVideos
         };

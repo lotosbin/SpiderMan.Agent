@@ -21,7 +21,7 @@ window.spGrab = ->
 
                 item =
                     time: time
-                    capString: $('a.league', this).text()
+                    capString: _capString
                     title: $('a.match-name', this).text()
                     liveVideosForMobile: liveVideos
 

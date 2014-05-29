@@ -32,6 +32,12 @@ window.spGrab = function() {
       if (el.competitionName.match(/CBA/)) {
         el.competitionName = "CBA";
       }
+      if (el.competitionName.match(/男篮/)) {
+        el.competitionName = "篮球友谊赛";
+      }
+      if (el.competitionName.match(/热身赛/)) {
+        el.competitionName = "足球友谊赛";
+      }
       item = {
         kanbisaiLink: "http://sports.qq.com/kbsweb/" + cateName + ".htm?matchId=" + el.matchId + "&competitionId=" + el.competitionId,
         kanbisaiJson: "http://sportswebapi.qq.com/match/view?competitionId=" + el.competitionId + "&matchId=" + el.matchId,
