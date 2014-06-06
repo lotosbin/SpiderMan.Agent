@@ -19,9 +19,7 @@ window.spGrab = ->
 				el.competitionName = "CBA"
 			else if el.competitionName.match /男篮/
 				el.competitionName = "篮球友谊赛"
-			else if el.competitionName.match /热身赛/
-				el.competitionName = "足球友谊赛"
-			else if el.competitionName.match /邀请赛/
+			else if el.competitionName.match /热身赛/ or el.competitionName.match /邀请赛/
 				el.competitionName = "足球友谊赛"
 			item =
 				kanbisaiLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
