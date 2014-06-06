@@ -38,7 +38,6 @@ window.spGrab = function() {
       }
       item = {
         kanbisaiLink: "http://sports.qq.com/kbsweb/" + cateName + ".htm?matchId=" + el.matchId + "&competitionId=" + el.competitionId,
-        kanbisaiJson: "http://sportswebapi.qq.com/match/view?competitionId=" + el.competitionId + "&matchId=" + el.matchId,
         capString: el.competitionName,
         status: status,
         teamNameChinese: el.homeName,
