@@ -7,7 +7,7 @@ window.spGrab = function() {
     var matchs;
     matchs = el[Object.keys(el)[0]];
     return matchs.forEach(function(el,  index) {
-      var cateName, item, status, time;
+      var cateName, item, status;
       cateName = "basket";
       switch (el.cateId) {
         case "1":
@@ -27,8 +27,6 @@ window.spGrab = function() {
         case "已结束":
           status = 2;
       }
-      time = Date.parseString(el.startTime, "yyyy-MM-dd HH:mm:ss");
-      time.setHours(time.getHours() - time.getTimezoneOffset() / 60);
       if (el.competitionName.match(/CBA/)) {
         el.competitionName = "CBA";
       } else if (el.competitionName.match(/男篮/)) {
@@ -42,7 +40,7 @@ window.spGrab = function() {
         status: status,
         teamNameChinese: el.homeName,
         teamNameChineseForGuest: el.awayName,
-        time: time,
+        time: el.startTime,
         point: el.homeGoal,
         pointForGuest: el.awayGoal,
         quarter: el.quarter,

@@ -15,8 +15,8 @@ window.spGrab = ->
 				when "比赛中" then status = 1
 				when "已结束" then status = 2
 
-			time = Date.parseString el.startTime, "yyyy-MM-dd HH:mm:ss"
-			time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
+			# time = Date.parseString el.startTime, "yyyy-MM-dd HH:mm:ss" #2014-07-09 04:00:00 kanbisai格式完全标准化，可以省略
+			# time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
 
 			if el.competitionName.match /CBA/
 				el.competitionName = "CBA"
@@ -31,7 +31,7 @@ window.spGrab = ->
 				status: status
 				teamNameChinese: el.homeName
 				teamNameChineseForGuest: el.awayName
-				time: time
+				time: el.startTime
 				point: el.homeGoal
 				pointForGuest: el.awayGoal
 				quarter: el.quarter

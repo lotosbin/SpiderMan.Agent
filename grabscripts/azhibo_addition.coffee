@@ -16,7 +16,8 @@ window.spGrab = ->
         '篮球友谊赛',
         '足球友谊赛',
         '世界杯热身赛',
-        '网球','乒乓球'
+        '网球','乒乓球',
+        '慈善盾杯','解放者杯'
     ]
     data = []
     $('#contentCanvas>.box:not(".tiny-box")').slice(0, 3).each ->
@@ -35,7 +36,7 @@ window.spGrab = ->
                     }
 
                 time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
-                time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
+                # time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
 
                 _capString = $('a:first', this).text()
                 if _capString is '世界杯热身赛' then _capString = '足球友谊赛'

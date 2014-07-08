@@ -32,7 +32,7 @@ websocket.onCallback = (info) ->
 
 websocket.injectJs './jquery-2.1.0.min.js'
 #1.2.1+ 版本castTesk不触发，未知原因，不浪费时间在这里 https://github.com/SignalR/SignalR/issues/2904
-websocket.injectJs './jquery.signalR-2.0.2.min.js'
+websocket.injectJs './jquery.signalR-2.1.0.min.js'
 websocket.includeJs serverUrl + '/signalr/hubs', ->
   websocket.evaluate (serverUrl, agentName)->
     #应该是webkit执行localfile时的issus，因为问题不明显也不被重视 http://goo.gl/S34e2n

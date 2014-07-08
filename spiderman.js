@@ -60,7 +60,7 @@ websocket.onCallback = function(info) {
 
 websocket.injectJs('./jquery-2.1.0.min.js');
 
-websocket.injectJs('./jquery.signalR-2.0.2.min.js');
+websocket.injectJs('./jquery.signalR-2.1.0.min.js');
 
 websocket.includeJs(serverUrl + '/signalr/hubs', function() {
   return websocket.evaluate(function(serverUrl, agentName) {
