@@ -3,9 +3,6 @@ window.spGrab = function() {
   var data;
   data = {};
   data.capString = $('#zbb_path>ul>li').last().text().trim().split(' ').slice(3).join(' ');
-  if (data.capString.match(/腾讯/)) {
-    for(var s = +new Date(); s + 2000 > +new Date();){};
-  }
-  data.bestVideo = $('#v_player').html();
+  data.bestVideo = $('#v_player>a').attr("href");
   return data;
 };

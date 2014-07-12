@@ -86,7 +86,6 @@ CastTesk = (task)->
     pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
   pageGrab.settings.loadImages = false
   now = Date.now()
-  gbdate = {}
 
   pageGrab.onConsoleMessage = (msg) ->
     console.log '~Evaluate: ' + msg
@@ -109,45 +108,60 @@ CastTesk = (task)->
         console.log "~BLOCKED AD: " + result[1]
         request.abort()
   # pageGrab.onResourceReceived = (data, request) ->
-    # if task.commandType == "Response"
-    #   gbdate = JSON.stringify data
+  #   if task.commandType == "Response"
+  #     gbdate = JSON.stringify data
 
   pageGrab.open task.url, (status) -> #encodeURI(task.url)
     if status isnt 'success'
       task.status = 2 #Fail
       task.error = 'Unable to access page'
-    # else if task.commandType == "Response"
-    #     task.status = 3 #Done
+      ReturnTesk task
+      pageGrab.close()
+      return
+
+    if not task.withoutJquery
+      pageGrab.injectJs 'jquery-2.1.0.min.js'
+    if task.withUnderscore
+      pageGrab.injectJs 'underscore-min.js'
+    if task.withDate
+      pageGrab.injectJs 'date.js'
+    if task.isMobile
+      pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}_mobi.js"
     else
-      if not task.withoutJquery
-        pageGrab.injectJs 'jquery-2.1.0.min.js'
-      if task.withUnderscore
-        pageGrab.injectJs 'underscore-min.js'
-      if task.withDate
-        pageGrab.injectJs 'date.js'
-      if task.isMobile
-        pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}_mobi.js"
-      else
-        pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}.js"
+      pageGrab.injectJs "grabscripts/#{task.source}_#{task.commandType}.js"
+
+    if not task.delay
       gbdate = pageGrab.evaluate ->
         return spGrab()
       task.spend = (Date.now() - now)/1000
-      if not gbdate
-        task.status = 2 #Fail
-        task.error = 'gbdate is false'
-      else
-        task.status = 3 #Done
-    pageGrab.close()
+      ReturnTesk task, gbdate
+      pageGrab.close()
+    else
+      window.setTimeout ->
+        gbdate = pageGrab.evaluate ->
+          return spGrab()
+        pageGrab.close()
+        task.spend = (Date.now() - now)/1000
+        ReturnTesk task, gbdate
+        pageGrab.close()
+      , task.delay*1000
 
-    websocket.evaluate (serverUrl, task, data)->
-      taskHub = $.connection.taskHub
-      taskHub.server.doneTask task
-      if task.status != 2 #not Fail
-        posturl = serverUrl + "/task/post" + task.articleType + task.commandType
-        if task.isMobile
-          posturl += '_mobi'
-        $.post posturl,
-          taskjson: JSON.stringify task
-          datajson: JSON.stringify data
-        #console.log "websocket data" + JSON.stringify data
-    , serverUrl, task, gbdate
+ReturnTesk = (task, gbdate)->
+  if task.status isnt 2
+    if not gbdate
+      task.status = 2 #Fail
+      task.error = 'gbdate is false'
+    else
+      task.status = 3 #Done
+  websocket.evaluate (serverUrl, task, data)->
+    taskHub = $.connection.taskHub
+    taskHub.server.doneTask task
+    if task.status != 2 #not Fail
+      posturl = serverUrl + "/task/post" + task.articleType + task.commandType
+      if task.isMobile
+        posturl += '_mobi'
+      $.post posturl,
+        taskjson: JSON.stringify task
+        datajson: JSON.stringify data
+      # console.log "data:" + JSON.stringify data
+  , serverUrl, task, gbdate
