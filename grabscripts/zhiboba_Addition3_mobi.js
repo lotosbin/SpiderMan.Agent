@@ -3,8 +3,7 @@ window.spGrab = function() {
   var data;
   data = {
     capString: $('.live_title').text().trim().split(' ').slice(3).join(' '),
-    bestVideoMobi: $('.videoShow').html()
+    bestVideoMobi: $('.videoShow').html().trim()
   };
-  console.log("zhiboba addition mobi: " + $('.videoShow').html());
   return data;
 };
