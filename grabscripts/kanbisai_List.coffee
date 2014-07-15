@@ -18,12 +18,10 @@ window.spGrab = ->
 			# time = Date.parseString el.startTime, "yyyy-MM-dd HH:mm:ss" #2014-07-09 04:00:00 kanbisai格式完全标准化，可以省略
 			# time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
 
-			if el.competitionName.match /CBA/
-				el.competitionName = "CBA"
-			else if el.competitionName.match /男篮/
-				el.competitionName = "篮球友谊赛"
-			else if el.competitionName.match /热身赛/ or el.competitionName.match /邀请赛/
-				el.competitionName = "足球友谊赛"
+			if el.competitionName.match /热身赛/
+				el.competitionName = el.competitionName.replace("热身赛","友谊赛")
+			else if el.competitionName.match /邀请赛/
+				el.competitionName = el.competitionName.replace("邀请赛","友谊赛")
 
 			item =
 				kanbisaiLink: "http://sports.qq.com/kbsweb/#{cateName}.htm?matchId=#{el.matchId}&competitionId=#{el.competitionId}"
