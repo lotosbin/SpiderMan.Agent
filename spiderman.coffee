@@ -84,6 +84,12 @@ CastTesk = (task)->
     pageGrab.settings.userAgent = "Mozilla/5.0 (iphone; cpu iphone os 7_0 like mac os x; en-us) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11a465 safari/9537.53"
   else
     pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
+  if task.customHeaders
+    pageGrab.customHeaders = JSON.parse task.customHeaders
+  if task.cookie
+    cookie = JSON.parse task.cookie
+    cookie['expires'] = (new Date()).getTime() + (1000 * 60 * 60) # expires in 1 hour
+    phantom.addCookie cookie
   pageGrab.settings.loadImages = false
   now = Date.now()
 
@@ -93,13 +99,13 @@ CastTesk = (task)->
     console.error "~EvaluateError_#{task.source}_#{task.commandType}:"
     _onError msg, trace
   pageGrab.onResourceRequested = (data, request) ->
-    if (/http:\/\/.+?\.css/g).test(data["url"]) or data.headers["Content-Type"] is "text/css" #http://goo.gl/3P8ltr
+    if (/http:\/\/.+?\.css/g).test(data["url"]) or data.headers["Content-Type"] is "text/css" # http://goo.gl/3P8ltr
       console.log "~BLOCKED CSS: " + data.url
       request.abort()
       return
-    result = /^https?:\/\/([^\/]+)/.exec data.url #adblock http://goo.gl/8Cn9ZE
+    result = /^https?:\/\/([^\/]+)/.exec data.url # adblock http://goo.gl/8Cn9ZE
     if result
-      if /\.doubleclick\./.test result[1] or #pretty format http://goo.gl/A9Gv3n
+      if /\.doubleclick\./.test result[1] or # pretty format http://goo.gl/A9Gv3n
       /\.baidustatic\.com$/.test result[1] or
       /\.alimama\.cn$/.test result[1] or
       /\.google-analytics\.com$/.test result[1] or
@@ -111,9 +117,9 @@ CastTesk = (task)->
   #   if task.commandType == "Response"
   #     gbdate = JSON.stringify data
 
-  pageGrab.open task.url, (status) -> #encodeURI(task.url)
+  pageGrab.open task.url, (status) -> # encodeURI(task.url)
     if status isnt 'success'
-      task.status = 2 #Fail
+      task.status = 2 # Fail
       task.error = 'Unable to access page'
       ReturnTesk task
       pageGrab.close()
@@ -149,15 +155,17 @@ CastTesk = (task)->
 ReturnTesk = (task, gbdate)->
   if task.status isnt 2
     if not gbdate
-      task.status = 2 #Fail
+      task.status = 2 # Fail
       task.error = 'gbdate is false'
     else
-      task.status = 3 #Done
+      task.status = 3 # Done
   websocket.evaluate (serverUrl, task, data)->
     taskHub = $.connection.taskHub
     taskHub.server.doneTask task
     if task.status != 2 #not Fail
-      posturl = serverUrl + "/task/post" + task.articleType + task.commandType
+      posturl = serverUrl + '/' + task.articleType + '/' + task.commandType
+      if task.postSourceName
+        posturl += "_#{task.source}"
       if task.isMobile
         posturl += '_mobi'
       $.post posturl,

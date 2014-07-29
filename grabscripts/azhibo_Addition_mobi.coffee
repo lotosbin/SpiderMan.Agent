@@ -27,7 +27,7 @@ window.spGrab = ->
                 links = $(this).children('a.channel')
                 liveTag = links.map (i, el)->
                     return $(el).text()
-                .get()
+                .get() #get string, otherwise be jquery-obj http://goo.gl/bvhXb
                 #liveVideos = _.intersection live, liveTag  #转移到server端的工作
                 liveVideos = liveTag.map (el, i)->
                     return {

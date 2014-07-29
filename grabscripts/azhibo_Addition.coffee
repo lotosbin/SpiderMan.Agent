@@ -1,8 +1,8 @@
 window.spGrab = ->
     caps = [
         'NBA','CBA', 'F1', '高尔夫'
-        '男篮世锦赛',
-        '男篮亚锦赛',
+        '男篮世锦赛', '天下足球'
+        '男篮亚锦赛', '吉尼斯国际冠军杯'
         '德甲','西甲',
         '意甲','英超',
         '法甲','欧冠',
@@ -27,8 +27,7 @@ window.spGrab = ->
                 links = $(this).children('a[target="_blank"]')
                 liveTag = links.map (i, el)->
                     return $(el).text()
-                .get() #get string, otherwise be jquery-obj http://goo.gl/bvhXb
-                #liveVideos = _.intersection live, liveTag #转移到server端的工作
+                .get()
                 liveVideos = liveTag.map (el, i)->
                     return {
                         Name: el
@@ -36,14 +35,10 @@ window.spGrab = ->
                     }
 
                 time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
-                # time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
-
-                _capString = $('a:first', this).text()
-                if _capString is '世界杯热身赛' then _capString = '足球友谊赛'
 
                 item =
                     time: time
-                    capString: _capString
+                    capString: $('a:first', this).text()
                     title: $('a:eq(1)', this).text()
                     liveVideos: liveVideos
 

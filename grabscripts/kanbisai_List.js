@@ -27,11 +27,6 @@ window.spGrab = function() {
         case "已结束":
           status = 2;
       }
-      if (el.competitionName.match(/热身赛/)) {
-        el.competitionName = el.competitionName.replace("热身赛", "友谊赛");
-      } else if (el.competitionName.match(/邀请赛/)) {
-        el.competitionName = el.competitionName.replace("邀请赛", "友谊赛");
-      }
       item = {
         kanbisaiLink: "http://sports.qq.com/kbsweb/" + cateName + ".htm?matchId=" + el.matchId + "&competitionId=" + el.competitionId,
         capString: el.competitionName,

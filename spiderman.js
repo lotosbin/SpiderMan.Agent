@@ -113,7 +113,7 @@ setInterval(function() {
 }, 60000);
 
 CastTesk = function(task) {
-  var now, pageGrab;
+  var cookie, now, pageGrab;
   grabTime = Date.now();
   console.log("~CastTesk: " + JSON.stringify(task));
   pageGrab = webpage.create();
@@ -121,6 +121,14 @@ CastTesk = function(task) {
     pageGrab.settings.userAgent = "Mozilla/5.0 (iphone; cpu iphone os 7_0 like mac os x; en-us) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11a465 safari/9537.53";
   } else {
     pageGrab.settings.userAgent = 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36';
+  }
+  if (task.customHeaders) {
+    pageGrab.customHeaders = JSON.parse(task.customHeaders);
+  }
+  if (task.cookie) {
+    cookie = JSON.parse(task.cookie);
+    cookie['expires'] = (new Date()).getTime() + (1000 * 60 * 60);
+    phantom.addCookie(cookie);
   }
   pageGrab.settings.loadImages = false;
   now = Date.now();
@@ -204,7 +212,10 @@ ReturnTesk = function(task, gbdate) {
     taskHub = $.connection.taskHub;
     taskHub.server.doneTask(task);
     if (task.status !== 2) {
-      posturl = serverUrl + "/task/post" + task.articleType + task.commandType;
+      posturl = serverUrl + '/' + task.articleType + '/' + task.commandType;
+      if (task.postSourceName) {
+        posturl += "_" + task.source;
+      }
       if (task.isMobile) {
         posturl += '_mobi';
       }
