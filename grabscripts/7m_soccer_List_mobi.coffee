@@ -70,6 +70,7 @@ window.spGrab = ->
 			teamGuest = $('div.sco>a, div.win>a', line2).clone().children().remove().end().text()
 			teamGuest = teamGuest.replace '（中）', ''
 			teamGuest = processTeamName teamGuest
+
 			point = $('div.sco>a>span, div.win>a>span', line1).text()
 			if point then point = point.split('(')[0]
 			pointGuest = $('div.sco>a>span, div.win>a>span', line2).text()
@@ -86,4 +87,5 @@ window.spGrab = ->
 				quarter: quarter
 			data.push item
 
+	#console.log "scfy:" + $(".scfy a").size()
 	return data

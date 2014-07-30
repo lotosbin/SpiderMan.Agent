@@ -113,7 +113,7 @@ setInterval(function() {
 }, 60000);
 
 CastTesk = function(task) {
-  var cookie, now, pageGrab;
+  var now, pageGrab;
   grabTime = Date.now();
   console.log("~CastTesk: " + JSON.stringify(task));
   pageGrab = webpage.create();
@@ -126,9 +126,7 @@ CastTesk = function(task) {
     pageGrab.customHeaders = JSON.parse(task.customHeaders);
   }
   if (task.cookie) {
-    cookie = JSON.parse(task.cookie);
-    cookie['expires'] = (new Date()).getTime() + (1000 * 60 * 60);
-    phantom.addCookie(cookie);
+    phantom.addCookie(JSON.parse(task.cookie));
   }
   pageGrab.settings.loadImages = false;
   now = Date.now();

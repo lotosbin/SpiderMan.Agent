@@ -87,9 +87,7 @@ CastTesk = (task)->
   if task.customHeaders
     pageGrab.customHeaders = JSON.parse task.customHeaders
   if task.cookie
-    cookie = JSON.parse task.cookie
-    cookie['expires'] = (new Date()).getTime() + (1000 * 60 * 60) # expires in 1 hour
-    phantom.addCookie cookie
+    phantom.addCookie JSON.parse task.cookie
   pageGrab.settings.loadImages = false
   now = Date.now()
 

@@ -20,10 +20,17 @@ window.spGrab = ->
         '慈善盾杯','解放者杯'
     ]
     data = []
+
+    processCap = (capString)->
+        if capString is '吉尼斯国际冠军杯' then capString = '国际冠军杯'
+        return capString
+
     $('#contentCanvas>.box:not(".tiny-box")').slice(0, 3).each ->
         day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0]
         $('li', this).each ->
-            if _.include caps, $('a:first', this).text()
+            capString = $('a:first', this).text()
+            if _.include caps, capString
+                capString = processCap capString
                 links = $(this).children('a[target="_blank"]')
                 liveTag = links.map (i, el)->
                     return $(el).text()
@@ -38,7 +45,7 @@ window.spGrab = ->
 
                 item =
                     time: time
-                    capString: $('a:first', this).text()
+                    capString: capString
                     title: $('a:eq(1)', this).text()
                     liveVideos: liveVideos
 
