@@ -27,7 +27,7 @@ window.spGrab = ->
             if _.include caps, _capArray[1]
                 link = ""
                 $(this).children('a').each ->
-                    if $(this).text().trim() is "全场录像回放"
+                    if $(this).text().trim() is "视频集锦"
                         link = $(this).attr('href')
                         return false
                 if link
@@ -38,7 +38,7 @@ window.spGrab = ->
                         time: _datetime
                         capString: _capArray[1]
                         title: _capArray.slice(2).join(' ')
-                        bestVideo: link
+                        transferData: link
 
                     data.push item
 

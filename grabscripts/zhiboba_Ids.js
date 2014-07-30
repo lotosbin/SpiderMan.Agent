@@ -12,7 +12,7 @@ window.spGrab = function() {
       if (_.include(caps, _capArray[1])) {
         link = "";
         $(this).children('a').each(function() {
-          if ($(this).text().trim() === "全场录像回放") {
+          if ($(this).text().trim() === "视频集锦") {
             link = $(this).attr('href');
             return false;
           }
@@ -24,7 +24,7 @@ window.spGrab = function() {
             time: _datetime,
             capString: _capArray[1],
             title: _capArray.slice(2).join(' '),
-            bestVideo: link
+            transferData: link
           };
           return data.push(item);
         }
