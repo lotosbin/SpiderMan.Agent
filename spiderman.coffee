@@ -141,10 +141,13 @@ CastTesk = (task)->
       ReturnTesk task, gbdate
       pageGrab.close()
     else
-      window.setTimeout ->
+      waitFor ->
+        console.log "waitFor..."
+        gbdate = pageGrab.evaluate ->
+          checkReady()
+      , ->
         gbdate = pageGrab.evaluate ->
           return spGrab()
-        pageGrab.close()
         task.spend = (Date.now() - now)/1000
         ReturnTesk task, gbdate
         pageGrab.close()
@@ -171,3 +174,21 @@ ReturnTesk = (task, gbdate)->
         datajson: JSON.stringify data
       # console.log "data:" + JSON.stringify data
   , serverUrl, task, gbdate
+
+waitFor = (testFx, onReady, timeOutMillis=6000) ->
+  start = new Date().getTime()
+  condition = false
+  f = ->
+    if (new Date().getTime() - start < timeOutMillis) and not condition
+      # If not time-out yet and condition not yet fulfilled
+      condition = (if typeof testFx is 'string' then eval testFx else testFx()) #< defensive code
+    else
+      if not condition
+        # If condition still not fulfilled (timeout but condition is 'false')
+        console.log "'waitFor()' timeout"
+        onReady()
+      else
+        console.log "'waitFor()' finished in #{new Date().getTime() - start}ms."
+        onReady()
+        clearInterval interval
+  interval = setInterval f, 250 #< repeat check every 250ms

@@ -1,5 +1,5 @@
 window.spGrab = ->
-    title = ['[新浪全场集锦]','[优酷全场集锦]', '[腾讯全场集锦]']
+    title = ['[新浪全场集锦]','[优酷全场集锦]', '[腾讯全场集锦]', '[BTV新闻集锦]']
     data = []
     # $('.content a').last().remove()
 
@@ -7,11 +7,15 @@ window.spGrab = ->
         text = $(this).text()
         href = $(this).attr('href')
         if text.indexOf("全场录像") >= 0
-            data.push href
+            data.push
+                title: text
+                transferData: href
             return
         $(title).each ->
             if text.indexOf(this) >= 0
-                data.push href
+                data.push
+                    title: text
+                    transferData: href
                 return false
 
     return data
