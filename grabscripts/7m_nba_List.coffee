@@ -1,12 +1,13 @@
 window.spGrab = ->
 	caps = [
 		'NBA','CBA','男篮世锦赛','男篮亚锦赛'
-		'友谊赛'
+		'友谊赛','斯坦杯'
 	]
 	data = []
 
 	processCap = (capString)->
 		if capString is '友谊赛' then capString = '篮球友谊赛'
+		if capString is '斯坦杯' then capString = '斯坦科维奇杯'
 		return capString
 
 	$("#LiveTable>tbody").slice(1).children("tr:visible[id$='_2']").each ->
