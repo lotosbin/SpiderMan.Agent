@@ -20,10 +20,17 @@ window.spGrab = ->
         '慈善盾杯','解放者杯'
     ]
     data = []
+
+    processCap = (capString)->
+        if capString is '吉尼斯国际冠军杯' then capString = '国际冠军杯'
+        return capString
+
     $('#match-container>.box').slice(1, 4).each ->
         day = new Date().getFullYear() + '年' + $(this).children('.title').text().trim().split(' ')[0]
         $('li.match', this).each ->
-            if _.include caps, $('a.league', this).text()
+            capString = $('a.league', this).text()
+            if _.include caps, capString
+                capString = processCap capString
                 links = $(this).children('a.channel')
                 liveTag = links.map (i, el)->
                     return $(el).text()
@@ -38,12 +45,9 @@ window.spGrab = ->
                 time = Date.parseString day + $('span.time ', this).text(), "yyyy年M月d日HH:mm"
                 # time.setHours time.getHours() - time.getTimezoneOffset() / 60 #json.js convert by UTC http://goo.gl/4vCdV3
 
-                _capString = $('a.league', this).text()
-                if _capString is '世界杯热身赛' then _capString = '足球友谊赛'
-
                 item =
                     time: time
-                    capString: _capString
+                    capString: capString
                     title: $('a.match-name', this).text()
                     liveVideosForMobile: liveVideos
 
