@@ -66,6 +66,12 @@ window.spGrab = ->
 				point: $('td.score span', this).eq(0).text()
 				pointForGuest: $('td.score span', this).eq(1).text()
 				quarter: ""
+
+			if item.teamNameChinese is "阿尔梅利亚" then item.teamNameChinese = "阿尔梅里亚"
+			if item.teamNameChineseForGuest is "阿尔梅利亚" then item.teamNameChineseForGuest = "阿尔梅里亚"
+			if item.teamNameChinese is "艾尔切" then item.teamNameChinese = "埃尔切"
+			if item.teamNameChineseForGuest is "艾尔切" then item.teamNameChineseForGuest = "埃尔切"
+
 			data.push item
 
 	return data

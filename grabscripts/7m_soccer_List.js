@@ -60,6 +60,18 @@ window.spGrab = function() {
         pointForGuest: $('td.score span', this).eq(1).text(),
         quarter: ""
       };
+      if (item.teamNameChinese === "阿尔梅利亚") {
+        item.teamNameChinese = "阿尔梅里亚";
+      }
+      if (item.teamNameChineseForGuest === "阿尔梅利亚") {
+        item.teamNameChineseForGuest = "阿尔梅里亚";
+      }
+      if (item.teamNameChinese === "艾尔切") {
+        item.teamNameChinese = "埃尔切";
+      }
+      if (item.teamNameChineseForGuest === "艾尔切") {
+        item.teamNameChineseForGuest = "埃尔切";
+      }
       return data.push(item);
     }
   });
