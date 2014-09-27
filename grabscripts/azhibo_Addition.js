@@ -37,6 +37,9 @@ window.spGrab = function() {
         if (links.filter(':contains("文字直播")').size()) {
           item.liveText = "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href');
         }
+        if (item.title.indexOf("格拉纳达CF") > -1) {
+          item.title = item.title.replace("格拉纳达CF", "格兰纳达");
+        }
         return data.push(item);
       }
     });

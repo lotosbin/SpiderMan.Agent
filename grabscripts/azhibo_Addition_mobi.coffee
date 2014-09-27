@@ -54,8 +54,7 @@ window.spGrab = ->
                 if links.filter(':contains("文字直播")').size()
                     item.liveTextForMobile = links.filter(':contains("文字直播")').attr('href')
 
-                if item.teamNameChinese is "格拉纳达CF" then item.teamNameChinese = "格兰纳达"
-                if item.teamNameChineseForGuest is "格拉纳达CF" then item.teamNameChineseForGuest = "格兰纳达"
+                if item.title.indexOf("格拉纳达CF") > -1 then item.title = item.title.replace("格拉纳达CF", "格兰纳达")
 
                 data.push item
 

@@ -51,6 +51,9 @@ window.spGrab = ->
 
                 if links.filter(':contains("文字直播")').size()
                     item.liveText = "http://www.azhibo.com" + links.filter(':contains("文字直播")').attr('href')
+
+                if item.title.indexOf("格拉纳达CF") > -1 then item.title = item.title.replace("格拉纳达CF", "格兰纳达")
+
                 data.push item
 
     return data

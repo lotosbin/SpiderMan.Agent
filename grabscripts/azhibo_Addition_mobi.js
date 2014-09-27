@@ -37,11 +37,8 @@ window.spGrab = function() {
         if (links.filter(':contains("文字直播")').size()) {
           item.liveTextForMobile = links.filter(':contains("文字直播")').attr('href');
         }
-        if (item.teamNameChinese === "格拉纳达CF") {
-          item.teamNameChinese = "格兰纳达";
-        }
-        if (item.teamNameChineseForGuest === "格拉纳达CF") {
-          item.teamNameChineseForGuest = "格兰纳达";
+        if (item.title.indexOf("格拉纳达CF") > -1) {
+          item.title = item.title.replace("格拉纳达CF", "格兰纳达");
         }
         return data.push(item);
       }
