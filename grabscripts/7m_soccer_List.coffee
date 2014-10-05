@@ -71,6 +71,8 @@ window.spGrab = ->
 			if item.teamNameChineseForGuest is "阿尔梅利亚" then item.teamNameChineseForGuest = "阿尔梅里亚"
 			if item.teamNameChinese is "艾尔切" then item.teamNameChinese = "埃尔切"
 			if item.teamNameChineseForGuest is "艾尔切" then item.teamNameChineseForGuest = "埃尔切"
+			if item.teamNameChinese is "曼彻斯特联" then item.teamNameChinese = "曼联"
+			if item.teamNameChineseForGuest is "曼彻斯特联" then item.teamNameChineseForGuest = "曼联"
 
 			data.push item
 

@@ -72,6 +72,12 @@ window.spGrab = function() {
       if (item.teamNameChineseForGuest === "艾尔切") {
         item.teamNameChineseForGuest = "埃尔切";
       }
+      if (item.teamNameChinese === "曼彻斯特联") {
+        item.teamNameChinese = "曼联";
+      }
+      if (item.teamNameChineseForGuest === "曼彻斯特联") {
+        item.teamNameChineseForGuest = "曼联";
+      }
       return data.push(item);
     }
   });
