@@ -4,7 +4,8 @@
   "description": "",
   "main": "date.js",
   "scripts": {
-    "start":"phantomjs spiderman.js agent1 http://localhost:34403/",
+    "build":"coffee -c -b ./",
+    "start":"npm run build && phantomjs spiderman.js agent1 http://localhost:34403/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
