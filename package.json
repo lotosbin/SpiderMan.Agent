@@ -1,0 +1,20 @@
+{
+  "name": "SpiderMan.Agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "date.js",
+  "scripts": {
+    "start":"phantomjs spiderman.js agent1 http://localhost:34403/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zicjin/SpiderMan.Agent.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zicjin/SpiderMan.Agent/issues"
+  },
+  "homepage": "https://github.com/zicjin/SpiderMan.Agent"
+}
